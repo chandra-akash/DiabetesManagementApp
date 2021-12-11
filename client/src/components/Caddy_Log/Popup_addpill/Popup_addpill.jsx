@@ -7,10 +7,8 @@ import { Appcontext } from '../../../context/Appcontext';
 
 function Popupaddpill({ setbtn, btn }) {
     
-    const { change, setChange } = useContext(Appcontext);
-
-
-   
+    const { change, setChange,userl,setUserl } = useContext(Appcontext)
+    const [load,setLoad] = useState(true);
 
     const [formData, setFormData] = useState({
         id:Date.now(),
@@ -22,10 +20,20 @@ function Popupaddpill({ setbtn, btn }) {
 
 const handleSubmit=async (e)=>{
 e.preventDefault();
-await axios.post("https://polar-peak-58924.herokuapp.com/remaining", formData);
+let user = localStorage.getItem("user")
+user = JSON.parse(user);
+localStorage.setItem("user",JSON.stringify({...user,remaining:[...user.remaining,formData]}))
+user = localStorage.getItem("user");
+user = JSON.parse(user);
+console.log(user.remaining)
+axios.patch(`http://localhost:8080/user/${user._id}`,{remaining:user.remaining})
+.then((res)=>{
+    console.log(res)
+})
 alert("added successfull");
 setbtn(false)
 setChange(!change)
+
 }
 
 const handleChange=(e)=>{

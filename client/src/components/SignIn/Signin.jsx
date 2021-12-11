@@ -3,10 +3,13 @@ import axios from "axios"
 import {useState} from "react";
 import "./signin.css";
 import { Link,useHistory } from "react-router-dom";
+import { useContext } from "react";
+import { Appcontext } from "../../context/Appcontext";
 
 export default function Signin({handle_user_name}){
 
     // const [auth,setAuth]=useState(false)
+    const {setUserl} = useContext(Appcontext);
     const [user,setUser] = useState({
         email:"",
         password:""
@@ -36,7 +39,7 @@ export default function Signin({handle_user_name}){
     function submit(){
         try{
           axios
-            .post("https://polar-peak-58924.herokuapp.com/login", user)
+            .post("http://localhost:8080/login", user)
             .then((res) => {
               if (res.data.status === 400) {
                 setError([res.data.message]);
@@ -45,6 +48,7 @@ export default function Signin({handle_user_name}){
               if (res.data.status === 200) {
                 setError([res.data.message]);
                 handle_user_name(res.data.name);
+                localStorage.setItem("user",JSON.stringify(res.data.userinfo))
                 //    changeState("other")
                 history.push("/Home");
                 // setAuth(true);

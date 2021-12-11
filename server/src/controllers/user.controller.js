@@ -22,8 +22,13 @@ router.get("/:id",async(req,res)=>{
 })
 
 router.patch("/:id",async(req,res)=>{
-    const data = await User.findByIdAndUpdate(req.params.id,req.body);
+    console.log(req.body)
+    try{
+    const data = await User.findByIdAndUpdate(req.params.id,req.body,{new:true}).populate("remaining");
     res.send(data);
+    }catch(err){
+        console.log(err)
+    }
 })
 
 router.delete("/:id",async(req,res)=>{

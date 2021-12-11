@@ -34,12 +34,13 @@ const register = async(req,res) =>{
 const login = async(req,res)=>{
     try{
     user = await User.findOne({email:req.body.email});
+    console.log(user)
     if(!user) return res.send({status:400,message:"Please check your email or passsword.",headers:"none"})
 
     let match = user.checkPassword(req.body.password);
     if(!match) return res.send({status:400,message:"Please check the email and password",headers:"none"})
 
-    res.send({status:200,message:"Log In Successful.",name:user.name});
+    res.send({status:200,message:"Log In Successful.",name:user.name,userinfo:user});
     }catch(err){
         res.send({status:500,message:"Sorry for the inconvinience plaese try again later"})
     }

@@ -23,7 +23,7 @@ export default function SignUp(){
      function submit(){
          try{
            axios
-             .post("https://polar-peak-58924.herokuapp.com/register", user)
+             .post("http://localhost:8080/register", user)
              .then((res) => {
                if (res.data.status === 400) {
                  setError([res.data.message]);

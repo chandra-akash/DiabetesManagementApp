@@ -6,10 +6,11 @@ const userSchema = new mongoose.Schema({
     email:{type:String,required:true,unique:true},
     password: { type: String, required: true },
     remaining: [{
-       type:mongoose.Schema.Types.ObjectId,ref:"remaining",required:true
+    //    type:mongoose.Schema.Types.ObjectId,ref:"remaining",required:true
+    type:Object,required:true
     }],
     taken: [{
-        type:mongoose.Schema.Types.ObjectId,ref:"taken",required:true
+        type:Object,required:true
     }]
 },{
     timestamps:true
